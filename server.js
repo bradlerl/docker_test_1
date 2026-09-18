@@ -14,10 +14,11 @@ app.use((req, res, next) => {
 });
 
 const pool = mysql.createPool({
-    host: process.env.mysql.railway.internal,
-    user: process.env.root,
-    password: process.env.tqTLuPGPAMUmFkVaxxsjIslsAEEiAXvQ,
-    port: process.env.3306
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    database: process.env.MYSQLDATABASE,
+    port: process.env.MYSQLPORT});
 
 app.get('/api/data', async (req, res) => {
     try {
@@ -30,7 +31,7 @@ app.get('/api/data', async (req, res) => {
     }
 });
 
-const PORT = process.env.PORT || 3306;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

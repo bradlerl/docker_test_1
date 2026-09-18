@@ -18,7 +18,8 @@ const pool = mysql.createPool({
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT});
+    port: process.env.MYSQLPORT
+});
 
 app.get('/api/data', async (req, res) => {
     try {
@@ -29,6 +30,10 @@ app.get('/api/data', async (req, res) => {
         console.error("SQL ERROR:", err);
         res.status(500).send(err.message);
     }
+});
+
+app.get('/', (req, res) => {
+    res.send('API is running');
 });
 
 const PORT = process.env.PORT || 3001;

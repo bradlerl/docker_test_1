@@ -1,5 +1,5 @@
 const express = require('express');
-const sql = require('mssql');
+const mysql = require('mysql2/promise');
 const cors = require('cors');
 const app = express();
 
@@ -13,23 +13,24 @@ app.use((req, res, next) => {
     next();
 });
 
-const config = {
-    user: 'Bradrachel',
-    password: 'Rach#0605',
-    database: 'virtual_escape_room',
-    options: { trustServerCertificate: true}
-};
+const pool = mysql.createPool({
+    host: process.env.mysql.railway.internal,
+    user: process.env.root,
+    password: process.env.tqTLuPGPAMUmFkVaxxsjIslsAEEiAXvQ,
+    port: process.env.3306
 
 app.get('/api/data', async (req, res) => {
     try {
         console.log("Connecting to SQL Server...")
-        await sql.connect(config);
-        const result = await sql.query`SELECT * FROM Rivals`;
-        res.json(result.recordset);
+        const [rows] = await pool.query('SELECT * FROM Rivals');
+        res.json(rows);
     } catch (err) {
         console.error("SQL ERROR:", err);
         res.status(500).send(err.message);
     }
 });
 
-app.listen(3001, '10.193.91.232', () => console.log('Server running'));
+const PORT = process.env.PORT || 3306;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

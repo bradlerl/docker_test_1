@@ -10,7 +10,7 @@
     <pre id="output">Loading...</pre>
 
     <script>
-        fetch("https://docker-test-1-5.onrender.com")
+        fetch("https://docker-test-1-5.onrender.com/api/data")
             .then(response => response.json())
             .then(data => {
                 document.getElementById('output').textContent = 
